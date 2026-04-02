@@ -61,6 +61,7 @@ const signup = async (req, res, next) => {
       constantMessages.user.verificationMailL
     );
   } catch (error) {
+    console.log(error);
     next(error);
   }
 };
