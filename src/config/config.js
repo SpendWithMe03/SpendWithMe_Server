@@ -20,7 +20,7 @@ const ADMIN_NAME = process.env.ADMIN_NAME;
 const ADMIN_KEY = process.env.ADMIN_KEY;
 
 //*** GOOGLE CONFIGURATION ***//
-const  GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID;
+const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID;
 
 //*** DATABASE CONFIGURATION ***//
 const MONGO_URL = process.env.MONGO_URL;
@@ -29,6 +29,10 @@ const DATA_BASE_URL = process.env.DATA_BASE_URL;
 //*** SMTP CONFIGURATION ***//
 const SMTP_MAIL = process.env.SMTP_MAIL;
 const SMTP_PASSWORD = process.env.SMTP_PASSWORD;
+const EMAILJS_PUBLIC_KEY = process.env.EMAILJS_PUBLIC_KEY;
+const EMAILJS_PRIVATE_KEY = process.env.EMAILJS_PRIVATE_KEY;
+const EMAILJS_SERVICE_ID = process.env.EMAILJS_SERVICE_ID;
+const EMAILJS_TEMPLATE_ID = process.env.EMAILJS_TEMPLATE_ID;
 
 //*** ORIGIN CONFIGURATION ***//
 const CLIENT_URL = process.env.CLIENT_URL;
@@ -51,4 +55,8 @@ export {
   ADMIN_EMAIL,
   ADMIN_PASSWORD,
   CLIENT_URL,
+  EMAILJS_PUBLIC_KEY,
+  EMAILJS_PRIVATE_KEY,
+  EMAILJS_SERVICE_ID,
+  EMAILJS_TEMPLATE_ID,
 };
