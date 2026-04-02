@@ -1,4 +1,4 @@
-
+// import { createTransport } from "nodemailer";
 // import { SMTP_MAIL, SMTP_PASSWORD } from "../config/config.js";
 import {
   EMAILJS_PRIVATE_KEY,
