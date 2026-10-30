@@ -14,6 +14,8 @@ import {
   createVerificationToken,
   verifyVerificationToken,
 } from "../../utils/helper/index.js";
+import EMBEDDING from "../../model/Embedding.js";
+import Mongoose from "mongoose";
 
 //*** USER SIGNUP ***//
 const signup = async (req, res, next) => {
@@ -25,7 +27,7 @@ const signup = async (req, res, next) => {
       return throwHttpError(
         "bad_request",
         constantMessages.user.alredyExists,
-        HTTP.BAD_REQUEST
+        HTTP.BAD_REQUEST,
       );
     }
 
@@ -42,7 +44,7 @@ const signup = async (req, res, next) => {
     const token = await createVerificationToken(
       email,
       Object.values(otpType)[0],
-      next
+      next,
     );
 
     // SEND OTP TO EMAIL
@@ -51,14 +53,14 @@ const signup = async (req, res, next) => {
       email,
       "signup",
       undefined,
-      next
+      next,
     );
 
     return jsonOne(
       res,
       HTTP.CREATED,
       {},
-      constantMessages.user.verificationMailL
+      constantMessages.user.verificationMailL,
     );
   } catch (error) {
     console.log(error);
@@ -78,7 +80,7 @@ const signupVerification = async (req, res, next) => {
       return throwHttpError(
         "bad_Request",
         "Token is expired",
-        HTTP.BAD_REQUEST
+        HTTP.BAD_REQUEST,
       );
     }
 
@@ -102,7 +104,7 @@ const login = async (req, res, next) => {
       return throwHttpError(
         "bad_request",
         constantMessages.user.invalidCredentials,
-        HTTP.BAD_REQUEST
+        HTTP.BAD_REQUEST,
       );
     }
 
@@ -110,7 +112,7 @@ const login = async (req, res, next) => {
       return throwHttpError(
         "bad_request",
         constantMessages.admin.deactivate,
-        HTTP.BAD_REQUEST
+        HTTP.BAD_REQUEST,
       );
     }
 
@@ -119,7 +121,7 @@ const login = async (req, res, next) => {
       return throwHttpError(
         "bad_request",
         constantMessages.user.invalidCredentials,
-        HTTP.BAD_REQUEST
+        HTTP.BAD_REQUEST,
       );
     }
 
@@ -128,7 +130,7 @@ const login = async (req, res, next) => {
       const token = await createVerificationToken(
         email,
         Object.values(otpType)[2],
-        next
+        next,
       );
 
       // SEND OTP TO EMAIL
@@ -137,14 +139,14 @@ const login = async (req, res, next) => {
         email,
         "emailverification",
         undefined,
-        next
+        next,
       );
 
       return jsonOne(
         res,
         HTTP.FORBIDDEN,
         {},
-        constantMessages.user.emailNotVerified
+        constantMessages.user.emailNotVerified,
       );
     }
 
@@ -154,7 +156,7 @@ const login = async (req, res, next) => {
     await User.findOneAndUpdate(
       { email, _id: user._id },
       { jwtToken: (await token).accessToken },
-      { new: true, runValidators: true }
+      { new: true, runValidators: true },
     );
 
     // SET JWT TOKEN IN COOKIE
@@ -164,7 +166,7 @@ const login = async (req, res, next) => {
       res,
       HTTP.SUCCESS,
       { token: (await token).accessToken },
-      constantMessages.user.loginSuccess
+      constantMessages.user.loginSuccess,
     );
   } catch (error) {
     next(error);
@@ -194,7 +196,7 @@ const googleSignup = async (req, res, next) => {
       return throwHttpError(
         "bad_request",
         constantMessages.user.alredyRegistered,
-        HTTP.BAD_REQUEST
+        HTTP.BAD_REQUEST,
       );
     }
 
@@ -203,7 +205,7 @@ const googleSignup = async (req, res, next) => {
         return throwHttpError(
           "bad_request",
           constantMessages.admin.deactivate,
-          HTTP.BAD_REQUEST
+          HTTP.BAD_REQUEST,
         );
       }
 
@@ -222,7 +224,7 @@ const googleSignup = async (req, res, next) => {
         {
           new: true,
           runValidators: true,
-        }
+        },
       );
 
       // SET JWT TOKEN IN COOKIE
@@ -232,7 +234,7 @@ const googleSignup = async (req, res, next) => {
         res,
         HTTP.SUCCESS,
         { token: (await userToken).accessToken },
-        constantMessages.user.loginSuccess
+        constantMessages.user.loginSuccess,
       );
     }
 
@@ -240,7 +242,7 @@ const googleSignup = async (req, res, next) => {
       return throwHttpError(
         "bad_request",
         constantMessages.user.notVerified,
-        HTTP.BAD_REQUEST
+        HTTP.BAD_REQUEST,
       );
     }
 
@@ -260,7 +262,7 @@ const googleSignup = async (req, res, next) => {
     await GoogleUser.findByIdAndUpdate(
       { _id: googleUserData._id },
       { jwtToken: (await userToken).accessToken },
-      { new: true, runValidators: true }
+      { new: true, runValidators: true },
     );
 
     // SET JWT TOKEN IN COOKIE
@@ -270,7 +272,7 @@ const googleSignup = async (req, res, next) => {
       res,
       HTTP.SUCCESS,
       { token: (await userToken).accessToken },
-      constantMessages.user.registered
+      constantMessages.user.registered,
     );
   } catch (error) {
     next(error);
@@ -293,7 +295,7 @@ const forgetPassword = async (req, res, next) => {
       return throwHttpError(
         "bad_request",
         constantMessages.user.withGoogle,
-        HTTP.BAD_REQUEST
+        HTTP.BAD_REQUEST,
       );
     }
 
@@ -301,14 +303,14 @@ const forgetPassword = async (req, res, next) => {
       return throwHttpError(
         "bad_request",
         constantMessages.user.notRegistered,
-        HTTP.BAD_REQUEST
+        HTTP.BAD_REQUEST,
       );
     }
 
     const token = await createVerificationToken(
       email,
       Object.values(otpType)[1],
-      next
+      next,
     );
 
     // SEND OTP TO EMAIL
@@ -317,7 +319,7 @@ const forgetPassword = async (req, res, next) => {
       email,
       "forgotpassword",
       undefined,
-      next
+      next,
     );
 
     return jsonOne(res, HTTP.SUCCESS, {}, constantMessages.user.resetPassword);
@@ -338,7 +340,7 @@ const changePassword = async (req, res, next) => {
       return throwHttpError(
         "bad_Request",
         "Token is expired",
-        HTTP.BAD_REQUEST
+        HTTP.BAD_REQUEST,
       );
     }
 
@@ -351,7 +353,7 @@ const changePassword = async (req, res, next) => {
       res,
       HTTP.SUCCESS,
       {},
-      constantMessages.user.passwordChangeSuccess
+      constantMessages.user.passwordChangeSuccess,
     );
   } catch (error) {
     next(error);

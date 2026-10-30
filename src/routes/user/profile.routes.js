@@ -1,5 +1,5 @@
 import exprees from "express";
-import profileController from "../../controller/user/profile.controller.js";
+import {profileController} from "../../controller/user/index.js";
 import auth from "../../middleware/authMiddleware.js";
 
 const _Router = exprees.Router({

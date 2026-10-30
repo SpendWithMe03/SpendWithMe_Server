@@ -1,5 +1,5 @@
 import exprees from "express";
-import transactionController from "../../controller/user/transaction.controller.js";
+import {transactionController} from "../../controller/user/index.js";
 import validate from "../../middleware/validationMiddleware.js";
 import { expenseT } from "../../validator/enum.validators.js";
 import {

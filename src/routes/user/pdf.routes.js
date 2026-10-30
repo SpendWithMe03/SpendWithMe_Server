@@ -1,5 +1,5 @@
 import exprees from "express";
-import pdf from "../../controller/user/pdf.controller.js";
+import {pdfController} from "../../controller/user/index.js";
 import auth from "../../middleware/authMiddleware.js";
 import validate from "../../middleware/validationMiddleware.js";
 import { allString } from "../../validator/auth.validators.js";
@@ -14,14 +14,14 @@ const _Router = exprees.Router({
 
 _Router
   .route("/generate-pdf")
-  .post(auth, validate([allString("month"), amount("year")]), pdf.generatePDF);
+  .post(auth, validate([allString("month"), amount("year")]), pdfController.generatePDF);
 
 _Router
   .route("/generate-group-pdf")
   .post(
     auth,
     validate([mongodbId("groupId"), allString("month"), amount("year")]),
-    pdf.generateGroupPDF
+    pdfController.generateGroupPDF
   );
 
 export const router = _Router;

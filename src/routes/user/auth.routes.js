@@ -1,5 +1,5 @@
 import exprees from "express";
-import authController from "../../controller/user/auth.controller.js";
+import { authController } from "../../controller/user/index.js";
 import validate from "../../middleware/validationMiddleware.js";
 import {
   emailAddress,
@@ -19,7 +19,7 @@ _Router
   .route("/signup")
   .post(
     validate([emailAddress(), password("password"), allString("name")]),
-    authController.signup
+    authController.signup,
   );
 
 /*** LOGIN ROUTE ***/
@@ -46,7 +46,7 @@ _Router
   .route("/change-password")
   .patch(
     validate([allString("token"), password("password")]),
-    authController.changePassword
+    authController.changePassword,
   );
 
 export const router = _Router;

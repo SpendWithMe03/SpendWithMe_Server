@@ -1,5 +1,5 @@
 import exprees from "express";
-import budgetController from "../../controller/user/budget.controller.js";
+import { budgetController } from "../../controller/user/index.js";
 import auth from "../../middleware/authMiddleware.js";
 import validate from "../../middleware/validationMiddleware.js";
 import { expenseType, splitTypes } from "../../utils/enum/index.js";
@@ -29,7 +29,7 @@ _Router
       allString("month"),
       amount("AllocatedBudget"),
     ]),
-    budgetController.budget
+    budgetController.budget,
   );
 
 _Router
@@ -41,7 +41,7 @@ _Router
       allString("month"),
       amount("AllocatedBudget"),
     ]),
-    budgetController.updateBudget
+    budgetController.updateBudget,
   );
 
 _Router
