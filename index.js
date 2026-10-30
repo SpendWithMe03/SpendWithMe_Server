@@ -31,14 +31,14 @@ const startServer = async () => {
     info(
       `Incoming -> Method: [${req.method}] - Url: [${req.url}] - IP: [${
         req.socket.remoteAddress
-      }] - Time: [${new Date()}]`
+      }] - Time: [${new Date()}]`,
     );
 
     res.on("finish", () => {
       info(
         `Finish -> Method: [${req.method}] - Url: [${req.url}] - IP: [${
           req.socket.remoteAddress
-        }] - Time: [${new Date()}] - Status: [${res.statusCode}]`
+        }] - Time: [${new Date()}] - Status: [${res.statusCode}]`,
       );
     });
     next();
@@ -59,7 +59,7 @@ const startServer = async () => {
 
     res.header(
       "Access-Control-Allow-Headers",
-      "Origin,X-Requested-with,Content-Type,Accept,Authorization"
+      "Origin,X-Requested-with,Content-Type,Accept,Authorization",
     );
     res.header("Access-Control-Allow-Credentials", "true");
 
@@ -76,7 +76,7 @@ const startServer = async () => {
   // DECODE THE REQUEST BODY FOR EVERY REQUEST
   app.use(decodeReqData);
 
-  // // ENCODE THE RESPONSE BODY FOR EVERY RESPONSE
+  // ENCODE THE RESPONSE BODY FOR EVERY RESPONSE
   app.use((req, res, next) => {
     const originalJson = res.json;
     res.json = function (body) {

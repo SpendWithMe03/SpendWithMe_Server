@@ -36,6 +36,6 @@ const incomeAndExpenseSchema = new Schema(
 );
 
 const IncomeAndExpense =
-  mongoose.models.Income || model("IncomeAndExpense", incomeAndExpenseSchema);
+  mongoose.models.IncomeAndExpense || model("IncomeAndExpense", incomeAndExpenseSchema);
 
 export default IncomeAndExpense;

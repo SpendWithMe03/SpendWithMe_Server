@@ -1,5 +1,5 @@
 import exprees from "express";
-import historyController from "../../controller/user/history.controller.js";
+import { historyController } from "../../controller/user/index.js";
 import auth from "../../middleware/authMiddleware.js";
 import validate from "../../middleware/validationMiddleware.js";
 import { mongodbId, resourceIds } from "../../validator/generalValidators.js";
@@ -19,7 +19,7 @@ _Router
       resourceIds("startDate", "query"),
       resourceIds("endDate", "query"),
     ]),
-    historyController.history
+    historyController.history,
   );
 
 //*** UPDATE TRANSACTION HISTORY ***//

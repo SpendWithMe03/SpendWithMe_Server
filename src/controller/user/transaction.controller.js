@@ -4,6 +4,8 @@ import IncomeAndExpense from "../../model/income.js";
 import { userSchema, userSchemaType } from "../../utils/enum/index.js";
 import mongoose from "mongoose";
 import { jsonOne } from "../../utils/genrelUtils.js";
+import EMBEDDING from "../../model/Embedding.js";
+import { generateEmbedding } from "../../utils/helper/index.js";
 
 //*** ADD INCOME ***//
 const income = async (req, res, next) => {
@@ -27,7 +29,7 @@ const income = async (req, res, next) => {
       res,
       HTTP.CREATED,
       {},
-      constantMessages.transaction.incomeAdded
+      constantMessages.transaction.incomeAdded,
     );
   } catch (error) {
     next(error);
@@ -40,7 +42,7 @@ const expanse = async (req, res, next) => {
     const { amount, description = "", category, transactionDate } = req.body;
 
     // CREATE EXPENSE TRANSACTION
-    await IncomeAndExpense.create({
+    const expenseId = await IncomeAndExpense.create({
       amount,
       description,
       category,
@@ -52,11 +54,18 @@ const expanse = async (req, res, next) => {
       transactionDate: new Date(transactionDate),
     });
 
+    await EMBEDDING.create({
+      userId: req.user,
+      expenseId: expenseId._id,
+      text: category + " " + description,
+      embedding: await generateEmbedding(category + " " + description),
+    });
+
     return jsonOne(
       res,
       HTTP.CREATED,
       {},
-      constantMessages.transaction.expenseAdded
+      constantMessages.transaction.expenseAdded,
     );
   } catch (error) {
     next(error);

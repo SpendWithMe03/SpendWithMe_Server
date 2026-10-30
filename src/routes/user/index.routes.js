@@ -6,6 +6,7 @@ import { router as ProfileRouter } from "./profile.routes.js";
 import { router as GroupRouter } from "./group.routes.js";
 import { router as BudgetRouter } from "./budget.routes.js";
 import {router as PdfRouter} from "./pdf.routes.js"
+import {router as AIRouter} from "./ai.routes.js"
 
 const _Router = Router({
   strict: true,
@@ -32,5 +33,6 @@ _Router.use("/history", HistoryRouter);
 _Router.use("/transaction", TransactionRouter);
 _Router.use("/budget", BudgetRouter);
 _Router.use("/pdf", PdfRouter);
+_Router.use("/ai", AIRouter);
 
 export const router = _Router;

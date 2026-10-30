@@ -1,5 +1,5 @@
 import exprees from "express";
-import groupController from "../../controller/user/group.controller.js";
+import { groupController } from "../../controller/user/index.js";
 import auth from "../../middleware/authMiddleware.js";
 import validate from "../../middleware/validationMiddleware.js";
 import { expenseType, splitTypes } from "../../utils/enum/index.js";
@@ -34,7 +34,7 @@ _Router
   .patch(
     auth,
     validate([allString("groupCode")]),
-    groupController.addMemberInGroup
+    groupController.addMemberInGroup,
   );
 
 _Router
@@ -50,7 +50,7 @@ _Router
       reguler2("members"),
       transactionDate("date"),
     ]),
-    groupController.groupExpense
+    groupController.groupExpense,
   );
 
 _Router
@@ -58,7 +58,7 @@ _Router
   .get(
     auth,
     validate([optionalResourceIds("groupId", "param")]),
-    groupController.getAllGroupExpense
+    groupController.getAllGroupExpense,
   );
 
 _Router
@@ -66,7 +66,7 @@ _Router
   .get(
     auth,
     validate([optionalResourceIds("expenseId", "param")]),
-    groupController.expenseDitails
+    groupController.expenseDitails,
   );
 
 _Router
@@ -74,7 +74,7 @@ _Router
   .get(
     auth,
     validate([optionalResourceIds("groupId", "param")]),
-    groupController.allGroupMember
+    groupController.allGroupMember,
   );
 
 _Router
@@ -82,7 +82,7 @@ _Router
   .get(
     auth,
     validate([optionalResourceIds("groupId", "param")]),
-    groupController.settlementMemberData
+    groupController.settlementMemberData,
   );
 
 _Router
@@ -90,7 +90,7 @@ _Router
   .post(
     auth,
     validate([reguler2("transactionId")]),
-    groupController.settlement
+    groupController.settlement,
   );
 
 _Router
@@ -98,7 +98,7 @@ _Router
   .get(
     auth,
     validate([optionalResourceIds("groupId", "param")]),
-    groupController.memberExpense
+    groupController.memberExpense,
   );
 
 _Router
@@ -106,7 +106,7 @@ _Router
   .post(
     auth,
     validate([mongodbId("expenseId")]),
-    groupController.deleteExpense
+    groupController.deleteExpense,
   );
 
 _Router
